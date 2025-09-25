@@ -1,4 +1,4 @@
-.so
-.so*
-.cd
-.PCM
+*.so
+*.so*
+*.cd
+*.PCM
