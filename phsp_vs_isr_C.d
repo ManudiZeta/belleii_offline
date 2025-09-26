@@ -92,5 +92,11 @@
 ./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TH2.h
 ./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TMatrixFBasefwd.h
 ./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TMatrixDBasefwd.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TLegend.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TPave.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TBox.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TAttText.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TStyle.h
+./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/TColor.h
 ./phsp_vs_isr_C.so: /Users/emanuelezanusso/Scratch/root/obj/include/RVersion.h /Users/emanuelezanusso/Scratch/root/obj/include/ROOT/RConfig.hxx /Users/emanuelezanusso/Scratch/root/obj/include/TClass.h /Users/emanuelezanusso/Scratch/root/obj/include/TDictAttributeMap.h /Users/emanuelezanusso/Scratch/root/obj/include/TInterpreter.h /Users/emanuelezanusso/Scratch/root/obj/include/TROOT.h /Users/emanuelezanusso/Scratch/root/obj/include/TBuffer.h /Users/emanuelezanusso/Scratch/root/obj/include/TMemberInspector.h /Users/emanuelezanusso/Scratch/root/obj/include/TError.h /Users/emanuelezanusso/Scratch/root/obj/include/RtypesImp.h /Users/emanuelezanusso/Scratch/root/obj/include/TIsAProxy.h /Users/emanuelezanusso/Scratch/root/obj/include/TFileMergeInfo.h /Users/emanuelezanusso/Scratch/root/obj/include/TCollectionProxyInfo.h /Users/emanuelezanusso/Scratch/root/obj/bin/rootcling
 phsp_vs_isr_C__ROOTBUILDVERSION= 6.32.06
