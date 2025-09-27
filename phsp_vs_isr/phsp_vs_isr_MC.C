@@ -11,8 +11,8 @@ void gamma_phsp_vs_isr()
 {
     
     gStyle->SetOptStat(0);
-    string in_1 = "../../root_file/isr/isr_list.root";
-    string in_2 = "../../root_file/nbar_recoil/phsp_gamma_out.root";
+    string in_1 = "../../root_file/isr/isr_list_gamma_MC.root";
+    string in_2 = "../../root_file/nbar_recoil/phsp_list_gamma_MC.root";
     
     ifstream in_f1(in_1);
     ifstream in_f2(in_2);
@@ -25,8 +25,8 @@ void gamma_phsp_vs_isr()
     in_f1.close();
     in_f2.close();
     
-    TFile myf_1("../../root_file/isr/isr_list.root");
-    TFile myf_2("../../root_file/nbar_recoil/phsp_gamma_out.root");
+    TFile myf_1("../../root_file/isr/isr_list_gamma_MC.root");
+    TFile myf_2("../../root_file/nbar_recoil/phsp_list_gamma_MC.root");
     
     TTree *tree_1 = (TTree*)myf_1.Get("tree");
     TTree *tree_2 = (TTree*)myf_2.Get("tree");
@@ -66,17 +66,17 @@ void gamma_phsp_vs_isr()
     leg->Draw("SAME");
     
     tela->Update();
-    tela->SaveAs("images/phsp_vs_isr_gammaList.pdf");
+    tela->SaveAs("images/phsp_vs_isr_gammaList_MC.pdf");
     
     
 }
 
-void nbar_phsp_vs_isr()
+void nbar_phsp_vs_isr_MC()
 {
     
     gStyle->SetOptStat(0);
-    string in_1 = "../../root_file/isr/isr_list_n.root";
-    string in_2 = "../../root_file/nbar_recoil/phsp_n_out.root";
+    string in_1 = "../../root_file/isr/isr_list_n_MC.root";
+    string in_2 = "../../root_file/nbar_recoil/phsp_list_n_MC.root";
     
     ifstream in_f1(in_1);
     ifstream in_f2(in_2);
@@ -89,8 +89,8 @@ void nbar_phsp_vs_isr()
     in_f1.close();
     in_f2.close();
     
-    TFile myf_1("../../root_file/isr/isr_list_n.root");
-    TFile myf_2("../../root_file/nbar_recoil/phsp_n_out.root");
+    TFile myf_1("../../root_file/isr/isr_list_n_MC.root");
+    TFile myf_2("../../root_file/nbar_recoil/phsp_list_n_MC.root");
     
     TTree *tree_1 = (TTree*)myf_1.Get("tree");
     TTree *tree_2 = (TTree*)myf_2.Get("tree");
@@ -130,7 +130,7 @@ void nbar_phsp_vs_isr()
     leg->Draw("SAME");
     
     tela->Update();
-    tela->SaveAs("images/phsp_vs_isr_nList.pdf");
+    tela->SaveAs("images/phsp_vs_isr_nList_MC.pdf");
     
     
 }
