@@ -97,8 +97,8 @@ void nbar_phsp_vs_isr_MC()
     
     TCanvas *c1 = new TCanvas("c1", "c1",800,600);
     
-    tree_1->Draw("theta>>histo1(50,0,3.2)","mcPDG == -2112","goff");
-    tree_2->Draw("theta >> histo2(50,0,3.2)","genMotherPDG == 300553","goff");
+    tree_1->Draw("mcP>>histo1(50,0,8.)","mcPDG == -2112 && genMotherPDG == 10022","goff");
+    tree_2->Draw("mcP >> histo2(50,0,8.)","mcPDG == -2112 && genMotherPDG == 300553","goff");
     
     delete c1;
     

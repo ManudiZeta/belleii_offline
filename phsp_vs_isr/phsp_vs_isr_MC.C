@@ -33,8 +33,8 @@ void gamma_phsp_vs_isr()
     
     TCanvas *c1 = new TCanvas("c1", "c1",800,600);
     
-    tree_1->Draw("theta>>histo1(50,0,3.2)","mcISR == 1","goff");
-    tree_2->Draw("theta >> histo2(50,0,3.2)","genMotherPDG == 300553","goff");
+    tree_1->Draw("p>>histo1(50,0,7.)","mcISR == 1","goff");
+    tree_2->Draw("p >> histo2(50,0,7.)","genMotherPDG == 300553","goff");
     
     delete c1;
     
@@ -48,7 +48,7 @@ void gamma_phsp_vs_isr()
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#theta [rad]");
+    histo1->GetXaxis()->SetTitle("p [GeV]");
     histo1->GetYaxis()->SetTitle("counts []");
     histo1->SetTitle("#gamma list from MC");
     
@@ -97,8 +97,8 @@ void nbar_phsp_vs_isr_MC()
     
     TCanvas *c1 = new TCanvas("c1", "c1",800,600);
     
-    tree_1->Draw("theta>>histo1(50,0,3.2)","mcPDG == -2112","goff");
-    tree_2->Draw("theta >> histo2(50,0,3.2)","genMotherPDG == 300553","goff");
+    tree_1->Draw("p>>histo1(50,0,8.)","mcPDG == -2112","goff");
+    tree_2->Draw("p>> histo2(50,0,8.)","genMotherPDG == 300553","goff");
     
     delete c1;
     
@@ -112,7 +112,7 @@ void nbar_phsp_vs_isr_MC()
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#theta [rad]");
+    histo1->GetXaxis()->SetTitle("p [GeV]");
     histo1->GetYaxis()->SetTitle("counts []");
     histo1->SetTitle("#bar{n} list from MC");
     
