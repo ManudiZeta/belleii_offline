@@ -7,7 +7,7 @@
 #include "TLegend.h"
 #include "TStyle.h"
 
-void g_vs_n_theta(bool choice)
+void g_vs_n(bool choice)
 {
     gStyle->SetOptStat(0);
     string in_1, in_2;
@@ -16,14 +16,14 @@ void g_vs_n_theta(bool choice)
     
     if (choice == 0)
     {
-        in_1 = "../../root_file/nbar_recoil/vpho_p_pi_n.root";
-        in_2 = "../../root_file/nbar_recoil/vpho_p_pi_nbg.root";
+        in_1 = "../../../vpho_std_isr_n_REC.root";
+        in_2 = "../../../vpho_std_isr_g_REC.root";
     }
     
     else
     {
-        in_1 = "../../root_file/isr/vpho_isr_gamma_REC.root";
-        in_2 = "../../root_file/isr/vpho_isr_nbg_gamma_REC.root";
+        in_1 = "../../../vpho_std_isr_n_REC_kin.root";
+        in_2 = "../../../vpho_std_isr_g_REC_kin.root";
     }
     
     ifstream in_f1(in_1);
@@ -39,14 +39,14 @@ void g_vs_n_theta(bool choice)
     
     if (choice == 0)
     {
-        myf_1 = new TFile("../../root_file/nbar_recoil/vpho_p_pi_n.root");
-        myf_2 = new TFile("../../root_file/nbar_recoil/vpho_p_pi_nbg.root");
+        myf_1 = new TFile("../../../vpho_std_isr_n_REC.root");
+        myf_2 = new TFile("../../../vpho_std_isr_g_REC.root");
     }
     
     else
     {
-        myf_1 = new TFile("../../root_file/isr/vpho_isr_gamma_REC.root");
-        myf_2 = new TFile("../../root_file/isr/vpho_isr_nbg_gamma_REC.root");
+        myf_1 = new TFile("../../../vpho_std_isr_n_REC_kin.root");
+        myf_2 = new TFile("../../../vpho_std_isr_g_REC_kin.root");
     }
     
     TTree *tree_1 = (TTree*)myf_1->Get("tree");
@@ -54,26 +54,29 @@ void g_vs_n_theta(bool choice)
     
     TCanvas *c1 = new TCanvas("c1", "c1",800,600);
     
-    tree_1->Draw("nbar_theta>>histo1(50,0,3.2)","","goff");
-    tree_2->Draw("nb_gamma_theta >> histo2(50,0,3.2)","","goff");
+    tree_1->Draw("nbar_clusterNHits>>histo1(100,0,70)","","goff");
+    tree_2->Draw("nbar_clusterNHits>>histo2(100,0,70)","","goff");
     
     delete c1;
     
     TH1 *histo1 = (TH1D*)gDirectory->Get("histo1");
     TH1 *histo2 = (TH1D*)gDirectory->Get("histo2");
     
+    histo1->SetMaximum(250);
+    histo2->SetMaximum(250);
     
-    histo1->Scale(1.0 / histo1->Integral());
-    histo2->Scale(1.0 / histo2->Integral());
+    
+    //histo1->Scale(1.0 / histo1->Integral());
+    //histo2->Scale(1.0 / histo2->Integral());
     
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#theta [rad]");
+    histo1->GetXaxis()->SetTitle("clusterNHits []");
     histo1->GetYaxis()->SetTitle("counts []");
     
-    if(choice == 0) {histo1->SetTitle("nbar list (PHSP #gamma)");}
-    else {histo1->SetTitle("nbar list (ISR #gamma)");}
+    if(choice == 0) {histo1->SetTitle("clusterNHits comparison in n e g hp");}
+    else {histo1->SetTitle("clusterNHits comparison in n e g hp");}
     
     cout<<"NEntries_1 = "<<histo1->GetEntries()<<endl;
     cout<<"NEntries_2 = "<<histo2->GetEntries()<<endl;
@@ -91,12 +94,12 @@ void g_vs_n_theta(bool choice)
     tela->Update();
     if (choice == 0)
     {
-        tela->SaveAs("images/phsp_g_vs_n_theta.pdf");
+        tela->SaveAs("images/phsp_g_vs_n_clusterNHits.pdf");
     }
     
     else
     {
-        tela->SaveAs("images/isr_g_vs_n_theta.pdf");
+        tela->SaveAs("images/isr_g_vs_n_clusterNHits_kin.pdf");
     }
     
 }
