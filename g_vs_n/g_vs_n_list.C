@@ -9,7 +9,7 @@
 
 void g_vs_n(bool choice)
 {
-    gStyle->SetOptStat(0);
+    gStyle->SetOptStat(1);
     string in_1, in_2;
     TFile *myf_1 = nullptr;
     TFile *myf_2 = nullptr;
@@ -90,7 +90,7 @@ void g_vs_n(bool choice)
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#DeltaP []");
+    histo1->GetXaxis()->SetTitle("#DeltaP [GeV]");
     histo1->GetYaxis()->SetTitle("counts []");
     
     histo1->SetTitle("#DeltaP comparison in n e g hp");
@@ -99,13 +99,13 @@ void g_vs_n(bool choice)
     cout<<"NEntries_2 = "<<histo2->GetEntries()<<endl;
     
     TLegend *leg = new TLegend(0.6,0.6,0.78,0.78);
-    leg->AddEntry(histo1,"n list","l");
-    leg->AddEntry(histo2,"#gamma list","l");
+    leg->AddEntry(histo1,"n list (histo1_copy)","l");
+    leg->AddEntry(histo2,"#gamma list (histo2_copy)","l");
     
     TCanvas *tela = new TCanvas("tela", "tela");
     
     histo1->DrawCopy("HIST");
-    histo2->DrawCopy("HIST SAME");
+    histo2->DrawCopy("HIST SAMES");
     leg->Draw("SAME");
     
     tela->Update();
