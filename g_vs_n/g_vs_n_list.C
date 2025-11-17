@@ -17,12 +17,12 @@ void g_vs_n(bool choice)
     if (choice == 0)
     {
         in_1 = "../../../vpho_std_isr_n_REC.root";
-        in_2 = "../../../vpho_std_isr_g_REC.root";
+        in_2 = "../../../vpho_std_isr_n_REC_kin.root";
     }
     
     else
     {
-        in_1 = "../../../vpho_std_isr_n_REC_kin.root";
+        in_1 = "../../../vpho_std_isr_g_REC.root";
         in_2 = "../../../vpho_std_isr_g_REC_kin.root";
     }
     
@@ -40,12 +40,12 @@ void g_vs_n(bool choice)
     if (choice == 0)
     {
         myf_1 = new TFile("../../../vpho_std_isr_n_REC.root");
-        myf_2 = new TFile("../../../vpho_std_isr_g_REC.root");
+        myf_2 = new TFile("../../../vpho_std_isr_n_REC_kin.root");
     }
     
     else
     {
-        myf_1 = new TFile("../../../vpho_std_isr_n_REC_kin.root");
+        myf_1 = new TFile("../../../vpho_std_isr_g_REC.root");
         myf_2 = new TFile("../../../vpho_std_isr_g_REC_kin.root");
     }
     
@@ -90,17 +90,19 @@ void g_vs_n(bool choice)
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#DeltaP [GeV]");
+    histo1->GetXaxis()->SetTitle("#Deltap [GeV]");
     histo1->GetYaxis()->SetTitle("counts []");
     
-    histo1->SetTitle("#DeltaP comparison in n e g hp");
+    string title = (choice == 0) ? "#Deltap comparison (n list)" : "#Deltap comparison (g list)";
+    histo1->SetTitle(&title[0]);
+
     
     cout<<"NEntries_1 = "<<histo1->GetEntries()<<endl;
     cout<<"NEntries_2 = "<<histo2->GetEntries()<<endl;
     
     TLegend *leg = new TLegend(0.6,0.6,0.78,0.78);
-    leg->AddEntry(histo1,"n list (histo1_copy)","l");
-    leg->AddEntry(histo2,"#gamma list (histo2_copy)","l");
+    leg->AddEntry(histo1,"no K.F. (histo1_copy)","l");
+    leg->AddEntry(histo2,"K.F. (histo2_copy)","l");
     
     TCanvas *tela = new TCanvas("tela", "tela");
     
@@ -111,12 +113,12 @@ void g_vs_n(bool choice)
     tela->Update();
     if (choice == 0)
     {
-        tela->SaveAs("images/isr_g_vs_n_deltaP.pdf");
+        tela->SaveAs("images/isr_n_kin_comp_deltaP.pdf");
     }
     
     else
     {
-        tela->SaveAs("images/isr_g_vs_n_deltaP_kin.pdf");
+        tela->SaveAs("images/isr_g_kin_comp_deltaP.pdf");
     }
     
 }
