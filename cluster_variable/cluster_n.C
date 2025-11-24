@@ -6,6 +6,7 @@
 #include "TH2F.h"
 #include "TLegend.h"
 #include "TStyle.h"
+#include "TString.h"
 
 void super ()
 {
@@ -15,25 +16,32 @@ void super ()
     TFile *myf_2 = nullptr;
     
     
-    in_1 = "../../vpho_std_isr_n_REC_merge100k_kin.root";
+    in_1 = "../../../vpho_std_isr_n_REC_merge100k_kin.root";
+    in_2 = "../../../vpho_std_isr_g_REC_merge100k_kin.root";
     
     ifstream in_f1(in_1);
+    ifstream in_f2(in_2);
     
-    
-    if(!in_f1)
+    if(!in_f1 || !in_f2)
     {
         cout<<"Selected root file doesn't exist. Please, generate it. \n";
         return;
     }
     in_f1.close();
     
-    myf_1 = new TFile("../../vpho_std_isr_n_REC_merge100k_kin.root");
+    myf_1 = new TFile("../../../vpho_std_isr_n_REC_merge100k_kin.root");
+    myf_2 = new TFile("../../../vpho_std_isr_g_REC_merge100k_kin.root");
     
     TTree *tree_1 = (TTree*)myf_1->Get("tree");
-    TCanvas *c1 = new TCanvas("c1", "c1",800,600);
+    TTree *tree_2 = (TTree*)myf_2->Get("tree");
     
-    tree_1->Draw("nbar_clusterNHits>>histo1(100,0,75)","","goff");
-    tree_1->Draw("nbar_clusterNHits>>histo2(100,0,75)","nbar_mcPDG == -2112","goff");
+    TCanvas *c1 = new TCanvas("c1", "c1",800,600);
+    TString var = "nbar_clusterAbsZernikeMoment51";
+    TString drawExpr1 = var + ">>histo1(128,0,1.2)";
+    TString drawExpr2 = var + ">>histo2(128,0,1.2)";
+    tree_1->Draw(drawExpr1, "nbar_clusterNHits>1", "goff");
+    tree_2->Draw(drawExpr2, "nbar_clusterNHits>1", "goff");
+    
     
     delete c1;
     
@@ -44,6 +52,7 @@ void super ()
     double devstd_1 = histo1->GetStdDev();
     double entries_1 = histo1->GetEntries();
     
+    
     double mean_2 = histo2->GetMean();
     double devstd_2 = histo2->GetStdDev();
     double entries_2 = histo2->GetEntries();
@@ -52,8 +61,8 @@ void super ()
     cout<<"entries_1 = "<<entries_1<<"|mean_1 = "<<mean_1<<"|devstd_1 = "<<devstd_1<<endl;
     cout<<"entries_2 = "<<entries_2<<"|mean_2 = "<<mean_2<<"|devstd_2 = "<<devstd_2<<endl;
     
-    //histo1->Scale(1.0 / histo1->Integral());
-    //histo2->Scale(1.0 / histo2->Integral());
+    histo1->Scale(1.0 / histo1->Integral());
+    histo2->Scale(1.0 / histo2->Integral());
     
     
     double max1 = histo1->GetBinContent(histo1->GetMaximumBin());
@@ -61,6 +70,7 @@ void super ()
     double max2 = histo2->GetBinContent(histo2->GetMaximumBin());
     cout<<"max2 = "<<max2<<endl;
     double max = (max1 > max2) ? max1 : max2;
+    //double max = max1;
     cout<<"max = "<<max<<endl;
     
     histo1->SetMaximum(max + 0.1*max);
@@ -68,21 +78,21 @@ void super ()
     
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
-    
-    histo1->GetXaxis()->SetTitle("#bar{n} clusterNHits []");
+    //TString title_x = var + "[rad]";
+    TString title_x = "|Z_{51}|[]";
+    histo1->GetXaxis()->SetTitle(title_x);
     histo1->GetYaxis()->SetTitle("counts []");
     
-    //string title = (choice == 0) ? "#Deltap comparison (n list)" : "#Deltap comparison (g list)";
-    string title = "clusterLAT (n list) comparison";
-    histo1->SetTitle(&title[0]);
+    TString title = var + " comparison in n vs g list";
+    histo1->SetTitle(title);
     
     
     cout<<"NEntries_1 = "<<histo1->GetEntries()<<endl;
     cout<<"NEntries_2 = "<<histo2->GetEntries()<<endl;
     
     TLegend *leg = new TLegend(0.6,0.6,0.78,0.78);
-    leg->AddEntry(histo1,"All clusters (histo1_copy)","l");
-    leg->AddEntry(histo2,"#bar{n}_mcPDG == -2112 (histo2_copy)","l");
+    leg->AddEntry(histo1,"n list (histo1_copy)","l");
+    leg->AddEntry(histo2,"g list (histo2_copy)","l");
     
     TCanvas *tela = new TCanvas("tela", "tela");
     
@@ -90,7 +100,8 @@ void super ()
     histo2->DrawCopy("HIST SAMES");
     leg->Draw("SAME");
     
-    tela->SaveAs("images/isr_n_clusterNHits_comp.pdf");
+    TString title_out = "images/isr_" + var + "_NHitsSEL.pdf";
+    tela->SaveAs(title_out);
     
     
 }

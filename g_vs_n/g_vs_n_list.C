@@ -16,14 +16,14 @@ void g_vs_n(bool choice)
     
     if (choice == 0)
     {
-        in_1 = "../../../vpho_std_isr_n_REC.root";
-        in_2 = "../../../vpho_std_isr_n_REC_kin.root";
+        in_1 = "../../../vpho_std_isr_n_REC_merge100k.root";
+        in_2 = "../../../vpho_std_isr_n_REC_merge100k_kin.root";
     }
     
     else
     {
-        in_1 = "../../../vpho_std_isr_g_REC.root";
-        in_2 = "../../../vpho_std_isr_g_REC_kin.root";
+        in_1 = "../../../vpho_std_isr_g_REC_merge100k.root";
+        in_2 = "../../../vpho_std_isr_g_REC_merge100k_kin.root";
     }
     
     ifstream in_f1(in_1);
@@ -39,14 +39,14 @@ void g_vs_n(bool choice)
     
     if (choice == 0)
     {
-        myf_1 = new TFile("../../../vpho_std_isr_n_REC.root");
-        myf_2 = new TFile("../../../vpho_std_isr_n_REC_kin.root");
+        myf_1 = new TFile("../../../vpho_std_isr_n_REC_merge100k.root");
+        myf_2 = new TFile("../../../vpho_std_isr_n_REC_merge100k_kin.root");
     }
     
     else
     {
-        myf_1 = new TFile("../../../vpho_std_isr_g_REC.root");
-        myf_2 = new TFile("../../../vpho_std_isr_g_REC_kin.root");
+        myf_1 = new TFile("../../../vpho_std_isr_g_REC_merge100k.root");
+        myf_2 = new TFile("../../../vpho_std_isr_g_REC_merge100k_kin.root");
     }
     
     TTree *tree_1 = (TTree*)myf_1->Get("tree");
@@ -54,8 +54,8 @@ void g_vs_n(bool choice)
     
     TCanvas *c1 = new TCanvas("c1", "c1",800,600);
     
-    tree_1->Draw("vpho_r_pRecoil-nbar_mcP>>histo1(100,-1,1)","nbar_mcPDG == -2112","goff");
-    tree_2->Draw("vpho_r_pRecoil-nbar_mcP>>histo2(100,-1,1)","nbar_mcPDG == -2112","goff");
+    tree_1->Draw("vpho_r_pRecoilTheta-nbar_mcTheta>>histo1(100,-1,1)","nbar_mcPDG == -2112","goff");
+    tree_2->Draw("vpho_r_pRecoilTheta-nbar_mcTheta>>histo2(100,-1,1)","nbar_mcPDG == -2112","goff");
     
     delete c1;
     
@@ -90,10 +90,10 @@ void g_vs_n(bool choice)
     histo1->SetLineColor(kBlue);
     histo2->SetLineColor(kRed);
     
-    histo1->GetXaxis()->SetTitle("#Deltap [GeV]");
+    histo1->GetXaxis()->SetTitle("#Delta#theta [rad]");
     histo1->GetYaxis()->SetTitle("counts []");
     
-    string title = (choice == 0) ? "#Deltap comparison (n list)" : "#Deltap comparison (g list)";
+    string title = (choice == 0) ? "#Delta#theta comparison (n list)" : "#Delta#theta comparison (g list)";
     histo1->SetTitle(&title[0]);
 
     
@@ -113,12 +113,12 @@ void g_vs_n(bool choice)
     tela->Update();
     if (choice == 0)
     {
-        tela->SaveAs("images/isr_n_kin_comp_deltaP.pdf");
+        tela->SaveAs("images/isr_n_kin_comp_deltaTheta.pdf");
     }
     
     else
     {
-        tela->SaveAs("images/isr_g_kin_comp_deltaP.pdf");
+        tela->SaveAs("images/isr_g_kin_comp_deltaTheta.pdf");
     }
     
 }
