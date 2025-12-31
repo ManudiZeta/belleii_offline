@@ -1,0 +1,77 @@
+#include "TFile.h"
+#include <Riostream.h>
+#include "TCanvas.h"
+#include "TH1D.h"
+#include "TTree.h"
+#include "TH2F.h"
+#include "TLegend.h"
+#include "TStyle.h"
+#include "TString.h"
+
+void imgen(bool choice)
+{
+    
+    TString name_file = (choice == 0) ? "../../../ranked_cocktail.root" : "../../../nog_ranked_cocktail.root";
+    
+    if(name_file == "../../../ranked_cocktail.root")
+    {
+        cout<< "File: "<<name_file<<endl;
+        gStyle->SetOptStat(1);
+        ifstream in_file(name_file);
+        
+        if(!in_file)
+        {
+            cout<<"The root file doesn't exist. Generate it. \n";
+            return;
+        }
+        in_file.close();
+        TFile myf(name_file);
+        
+        TTree *tree = (TTree*)myf.Get("tree");
+        TCanvas *tela = new TCanvas();
+        
+        tree->Draw("vpho_r_mRecoil>>h(100,0,10)","vpho_r_mRecoil>0");
+        TH1* h = (TH1*)gDirectory->Get("h");
+        h->SetXTitle("m_{recoil} [GeV]");
+        h->SetYTitle("counts []");
+        h->SetTitle("Recoil mass of p+, #pi-, #gamma");
+        tela->SaveAs("images/ranked_gamma/pdf/mRecoil.pdf");
+        tela->SaveAs("images/ranked_gamma/root/mRecoil.root");
+            
+        myf.Close();
+        delete tela;
+    }
+    
+    
+    
+    
+    else if(name_file == "~/nog_ranked_cocktail.root")
+    {
+        gStyle->SetOptStat(1);
+        ifstream in_file(name_file);
+        
+        if(!in_file)
+        {
+            cout<<"The root file doesn't exist. Generate it. \n";
+            return;
+        }
+        in_file.close();
+        TFile myf(name_file);
+        
+        TTree *tree = (TTree*)myf.Get("tree");
+        TCanvas *tela = new TCanvas();
+        
+        tree->Draw("vpho_r_mRecoil>>h(100,0,10)","vpho_r_mRecoil>0");
+        TH1* h = (TH1*)gDirectory->Get("h");
+        h->SetXTitle("m_{recoil} [GeV]");
+        h->SetYTitle("counts []");
+        h->SetTitle("Recoil mass of p+, #pi-, #gamma");
+        tela->SaveAs("images/ranked_gamma/mRecoil.pdf");
+        tela->SaveAs("images/ranked_gamma/mRecoil.root");
+            
+        myf.Close();
+        delete tela;
+    }
+    
+}
+
