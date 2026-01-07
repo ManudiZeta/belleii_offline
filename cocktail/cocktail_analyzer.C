@@ -11,7 +11,7 @@
 void imgen(bool choice)
 {
     
-    TString name_file = (choice == 0) ? "../../../collection__output.root" : "../../../nog_ranked_cocktail.root";
+    TString name_file = (choice == 0) ? "../../../collection__output.root" : "../../../nog_out_05012026_2.root";
     
     if(name_file == "../../../collection__output.root")
     {
@@ -30,14 +30,14 @@ void imgen(bool choice)
         TTree *tree = (TTree*)myf.Get("tree");
         TCanvas *tela = new TCanvas();
         
-        tree->Draw("vpho_r_mRecoil>>h(100,0,10)","vpho_r_mRecoil>0 && nROE_Charged__bo__bc == 0 && alpha<0.35 && nbar_mcPDG == -2112");
+        tree->Draw("vpho_r_mRecoil>>h(100,0,2)","vpho_r_mRecoil>0 && vpho_r_mRecoil<2 && nROE_Charged__bo__bc == 0");
         TH1* h = (TH1*)gDirectory->Get("h");
         h->SetXTitle("m_{recoil} [GeV]");
         h->SetYTitle("counts []");
         h->SetTitle("Recoil mass of p+, #pi-, #gamma");
-        tela->SaveAs("images/ranked_gamma/pdf/mRecoil_3.pdf");
-        tela->SaveAs("images/ranked_gamma/root/mRecoil_3.root");
-            
+        tela->SaveAs("images/ranked_gamma/pdf/mRecoil_1.pdf");
+        tela->SaveAs("images/ranked_gamma/root/mRecoil_1.root");
+        
         myf.Close();
         delete tela;
     }
@@ -45,8 +45,9 @@ void imgen(bool choice)
     
     
     
-    else if(name_file == "~/nog_ranked_cocktail.root")
+    else if(name_file == "../../../nog_out_05012026_2.root")
     {
+        cout<< "File: "<<name_file<<endl;
         gStyle->SetOptStat(1);
         ifstream in_file(name_file);
         
@@ -61,17 +62,17 @@ void imgen(bool choice)
         TTree *tree = (TTree*)myf.Get("tree");
         TCanvas *tela = new TCanvas();
         
-        tree->Draw("vpho_r_mRecoil>>h(100,0,10)","vpho_r_mRecoil>0");
+        tree->Draw("vpho_r_mRecoil>>h(100,0,2)","vpho_r_mRecoil>0 && vpho_r_mRecoil<2 && nROE_Charged__bo__bc == 0 && alpha<0.35 && nbar_mcPDG == -2112");
         TH1* h = (TH1*)gDirectory->Get("h");
         h->SetXTitle("m_{recoil} [GeV]");
         h->SetYTitle("counts []");
-        h->SetTitle("Recoil mass of p+, #pi-, #gamma");
-        tela->SaveAs("images/ranked_gamma/mRecoil.pdf");
-        tela->SaveAs("images/ranked_gamma/mRecoil.root");
-            
+        h->SetTitle("Recoil mass of p+, #pi-");
+        tela->SaveAs("images/ranked_nogamma/pdf/mRecoil_3.pdf");
+        tela->SaveAs("images/ranked_nogamma/root/mRecoil_3.root");
+        
         myf.Close();
         delete tela;
+        
     }
-    
 }
 
