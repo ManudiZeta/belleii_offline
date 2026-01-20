@@ -8,71 +8,43 @@
 #include "TStyle.h"
 #include "TString.h"
 
-void imgen(bool choice)
+void imgen()
 {
+    gStyle->SetOptStat(0);
+    TFile myf  ="../../../15012026_nog.root" ;
     
-    TString name_file = (choice == 0) ? "../../../collection__output.root" : "../../../nog_out_05012026_2.root";
+    TTree *tree = (TTree*)myf.Get("tree");
+    TCanvas *tela = new TCanvas();
     
-    if(name_file == "../../../collection__output.root")
-    {
-        cout<< "File: "<<name_file<<endl;
-        gStyle->SetOptStat(1);
-        ifstream in_file(name_file);
-        
-        if(!in_file)
-        {
-            cout<<"The root file doesn't exist. Generate it. \n";
-            return;
-        }
-        in_file.close();
-        TFile myf(name_file);
-        
-        TTree *tree = (TTree*)myf.Get("tree");
-        TCanvas *tela = new TCanvas();
-        
-        tree->Draw("vpho_r_mRecoil>>h(100,0,2)","vpho_r_mRecoil>0 && vpho_r_mRecoil<2 && nROE_Charged__bo__bc == 0");
-        TH1* h = (TH1*)gDirectory->Get("h");
-        h->SetXTitle("m_{recoil} [GeV]");
-        h->SetYTitle("counts []");
-        h->SetTitle("Recoil mass of p+, #pi-, #gamma");
-        tela->SaveAs("images/ranked_gamma/pdf/mRecoil_1.pdf");
-        tela->SaveAs("images/ranked_gamma/root/mRecoil_1.root");
-        
-        myf.Close();
-        delete tela;
-    }
+    tree->Draw("vpho_r_mRecoil>>h1(200,0,2)","");
+    tree->Draw("vpho_r_mRecoil>>h2(200,0,2)","nROE_Charged__bo__bc == 0 && alpha <0.35");
+    tree->Draw("vpho_r_mRecoil>>h3(200,0,2)","nROE_Charged__bo__bc == 0 && alpha <0.35 && pi_pionID>0.9 && roeE__bo__bc < 1");
     
     
+    TH1* h1 = (TH1*)gDirectory->Get("h1");
+    TH1* h2 = (TH1*)gDirectory->Get("h2");
+    TH1* h3 = (TH1*)gDirectory->Get("h3");
+    
+    h1->SetXTitle("m_{recoil} [#frac{GeV}{c^{2}}]");
+    h1->SetYTitle("counts");
+    h1->SetTitle("recoil mass of p+, #pi-");
+    
+    h1->SetLineColor(kBlue);
+    h2->SetLineColor(kRed);
+    h3->SetLineColor(kGreen);
     
     
-    else if(name_file == "../../../nog_out_05012026_2.root")
-    {
-        cout<< "File: "<<name_file<<endl;
-        gStyle->SetOptStat(1);
-        ifstream in_file(name_file);
-        
-        if(!in_file)
-        {
-            cout<<"The root file doesn't exist. Generate it. \n";
-            return;
-        }
-        in_file.close();
-        TFile myf(name_file);
-        
-        TTree *tree = (TTree*)myf.Get("tree");
-        TCanvas *tela = new TCanvas();
-        
-        tree->Draw("vpho_r_mRecoil>>h(100,0,2)","vpho_r_mRecoil>0 && vpho_r_mRecoil<2 && nROE_Charged__bo__bc == 0 && alpha<0.35 && nbar_mcPDG == -2112");
-        TH1* h = (TH1*)gDirectory->Get("h");
-        h->SetXTitle("m_{recoil} [GeV]");
-        h->SetYTitle("counts []");
-        h->SetTitle("Recoil mass of p+, #pi-");
-        tela->SaveAs("images/ranked_nogamma/pdf/mRecoil_3.pdf");
-        tela->SaveAs("images/ranked_nogamma/root/mRecoil_3.root");
-        
-        myf.Close();
-        delete tela;
-        
-    }
+    TLegend *leg = new TLegend();
+    leg->AddEntry(h1, "No further cuts","l");
+    leg->AddEntry(h2, "nROE_Charged = 0, #alpha <0.35","l");
+    leg->AddEntry(h3, "nROE_Charged = 0, #alpha < 0.35, #pi_{ID} > 0.9, roeE < 1","l");
+    
+    h1->DrawCopy();
+    h2->DrawCopy("same");
+    h3->DrawCopy("same");
+    leg->Draw("same");
+    tela->SaveAs("images/mRecoil_cuts.pdf");
+    
+    myf.Close();
 }
 
